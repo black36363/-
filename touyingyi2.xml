@@ -1,0 +1,103 @@
+<mujoco model="Classroom_Square_Small_Windows_Opposite_Door">
+  <compiler angle="radian" inertiafromgeom="true" discardvisual="false"/>
+  <option timestep="0.005" integrator="RK4"/>
+
+  <asset>
+    <material name="desk_top" rgba="0.7 0.5 0.3 1"/>    <!-- 桌面木色 -->
+    <material name="desk_leg" rgba="0.6 0.4 0.2 1"/>    <!-- 桌腿深木色 -->
+    <material name="proj" rgba="0.2 0.2 0.2 1"/>        <!-- 投影仪 -->
+    <material name="paper" rgba="0.99 0.98 0.95 1"/>    <!-- 试卷 -->
+    <material name="screen" rgba="0.97 0.97 0.97 1"/>   <!-- 竖向幕布 -->
+    <material name="wood_floor" rgba="0.6 0.45 0.3 1"/> <!-- 木质地板 -->
+    <material name="wall_white" rgba="0.95 0.95 0.95 1"/> <!-- 教室墙面 -->
+    <material name="wall_frame" rgba="0.3 0.3 0.3 1"/>  <!-- 门窗边框 -->
+    <material name="door_wood" rgba="0.6 0.4 0.2 1"/>   <!-- 木门 -->
+    <material name="window_glass" rgba="0.8 0.9 1 0.7"/> <!-- 窗户玻璃（高透淡蓝） -->
+    <material name="ceiling_white" rgba="0.9 0.9 0.9 1"/> <!-- 加高天花板（8m） -->
+    <material name="fan_metal" rgba="0.4 0.4 0.4 1"/>   <!-- 电风扇金属件 -->
+    <material name="fan_blade" rgba="0.7 0.7 0.7 1"/>   <!-- 电风扇扇叶 -->
+  </asset>
+
+  <worldbody>
+    <!-- 全局明亮灯光 -->
+    <light name="main_light" pos="5 10 10" dir="-1 -1 -1" diffuse="1 1 1" ambient="0.5 0.5 0.5"/>
+
+    <!-- 1. 封闭立方体教室外壳（地板对齐，天花板8m） -->
+    <geom name="classroom_wood_floor" type="box" size="15 10 0.1" pos="-15 10 0" material="wood_floor"/>
+    <geom name="classroom_wall_back" type="box" size="15 0.1 4" pos="-15 20 4" material="wall_white"/> <!-- 后门墙 -->
+    <geom name="classroom_wall_front" type="box" size="15 0.1 4" pos="-15 0 4" material="wall_white"/>  <!-- 前门墙+幕布贴墙 -->
+    <geom name="classroom_wall_left" type="box" size="0.1 10 4" pos="-30 10 4" material="wall_white"/>
+    <geom name="classroom_wall_right" type="box" size="0.1 10 4" pos="0 10 4" material="wall_white"/>  <!-- 门对面墙（贴正方形小窗） -->
+
+    <!-- 2. 门窗布局：前后双门+4扇正方形小窗户（门对面右侧墙，均匀排布） -->
+    <!-- 前门（前墙，幕布旁，紧贴外壳，居中） -->
+    <geom name="door_front_frame" type="box" size="1.2 0.1 2.5" pos="-15 0 2.5" material="wall_frame"/>
+    <geom name="door_front_main" type="box" size="1.0 0.1 2.3" pos="-15 0 2.5" material="door_wood"/>
+    <!-- 后门（后墙，紧贴外壳，居中） -->
+    <geom name="door_back_frame" type="box" size="1.2 0.1 2.5" pos="-15 20 2.5" material="wall_frame"/>
+    <geom name="door_back_main" type="box" size="1.0 0.1 2.3" pos="-15 20 2.5" material="door_wood"/>
+    <!-- 4扇正方形小窗户（门对面右侧墙，紧贴墙面，2×2矩阵排布） -->
+    <!-- 左上窗 -->
+    <geom name="window_square1_frame" type="box" size="0.1 1.5 1.5" pos="0 13 3.5" material="wall_frame"/>
+    <geom name="window_square1_glass" type="box" size="0.1 1.3 1.3" pos="0 13 3.5" material="window_glass"/>
+    <!-- 右上窗 -->
+    <geom name="window_square2_frame" type="box" size="0.1 1.5 1.5" pos="0 13 2.0" material="wall_frame"/>
+    <geom name="window_square2_glass" type="box" size="0.1 1.3 1.3" pos="0 13 2.0" material="window_glass"/>
+    <!-- 左下窗 -->
+    <geom name="window_square3_frame" type="box" size="0.1 1.5 1.5" pos="0 7 3.5" material="wall_frame"/>
+    <geom name="window_square3_glass" type="box" size="0.1 1.3 1.3" pos="0 7 3.5" material="window_glass"/>
+    <!-- 右下窗 -->
+    <geom name="window_square4_frame" type="box" size="0.1 1.5 1.5" pos="0 7 2.0" material="wall_frame"/>
+    <geom name="window_square4_glass" type="box" size="0.1 1.3 1.3" pos="0 7 2.0" material="window_glass"/>
+
+    <!-- 3. 悬挂式电风扇（2台，对称分布） -->
+    <body name="fan1" pos="-23 10 7">
+      <geom name="fan1_pole" type="cylinder" size="0.05 0.5" pos="0 0 0" material="fan_metal"/>
+      <geom name="fan1_motor" type="cylinder" size="0.2 0.1" pos="0 0 -0.5" material="fan_metal"/>
+      <geom name="fan1_blade1" type="box" size="0.8 0.05 0.1" pos="0.8 0 -0.5" material="fan_blade"/>
+      <geom name="fan1_blade2" type="box" size="0.8 0.05 0.1" pos="-0.4 0.69 -0.5" material="fan_blade"/>
+      <geom name="fan1_blade3" type="box" size="0.8 0.05 0.1" pos="-0.4 -0.69 -0.5" material="fan_blade"/>
+    </body>
+    <body name="fan2" pos="-7 10 7">
+      <geom name="fan2_pole" type="cylinder" size="0.05 0.5" pos="0 0 0" material="fan_metal"/>
+      <geom name="fan2_motor" type="cylinder" size="0.2 0.1" pos="0 0 -0.5" material="fan_metal"/>
+      <geom name="fan2_blade1" type="box" size="0.8 0.05 0.1" pos="0.8 0 -0.5" material="fan_blade"/>
+      <geom name="fan2_blade2" type="box" size="0.8 0.05 0.1" pos="-0.4 0.69 -0.5" material="fan_blade"/>
+      <geom name="fan2_blade3" type="box" size="0.8 0.05 0.1" pos="-0.4 -0.69 -0.5" material="fan_blade"/>
+    </body>
+
+    <!-- 4. 幕布：位于桌子正前方+紧贴前墙+与投影仪垂直 -->
+    <geom name="screen" type="box" size="0.1 2 1.5" pos="-15 0 1.5" material="screen"/>
+
+    <!-- 5. 第1组课桌（居中，投影仪正对前方幕布） -->
+    <body name="desk1" pos="-15 10 0">
+      <geom name="desk1_top" type="box" size="0.8 0.5 0.08" pos="0 0 1.0" material="desk_top"/>
+      <geom name="desk1_leg1" type="box" size="0.08 0.08 0.6" pos="0.7 0.4 0.3" material="desk_leg"/>
+      <geom name="desk1_leg2" type="box" size="0.08 0.08 0.6" pos="0.7 -0.4 0.3" material="desk_leg"/>
+      <geom name="desk1_leg3" type="box" size="0.08 0.08 0.6" pos="-0.7 0.4 0.3" material="desk_leg"/>
+      <geom name="desk1_leg4" type="box" size="0.08 0.08 0.6" pos="-0.7 -0.4 0.3" material="desk_leg"/>
+      <geom name="desk1_proj" type="box" size="0.2 0.15 0.08" pos="0.3 0 1.08" material="proj"/>
+      <geom name="desk1_paper" type="box" size="0.3 0.2 0.001" pos="-0.3 0 1.085" material="paper"/>
+    </body>
+
+    <!-- 6. 第2组课桌（靠近幕布一侧） -->
+    <body name="desk2" pos="-15 8.0 0">
+      <geom name="desk2_top" type="box" size="0.8 0.5 0.08" pos="0 0 1.0" material="desk_top"/>
+      <geom name="desk2_leg1" type="box" size="0.08 0.08 0.6" pos="0.7 0.4 0.3" material="desk_leg"/>
+      <geom name="desk2_leg2" type="box" size="0.08 0.08 0.6" pos="0.7 -0.4 0.3" material="desk_leg"/>
+      <geom name="desk2_leg3" type="box" size="0.08 0.08 0.6" pos="-0.7 0.4 0.3" material="desk_leg"/>
+      <geom name="desk2_leg4" type="box" size="0.08 0.08 0.6" pos="-0.7 -0.4 0.3" material="desk_leg"/>
+      <geom name="desk2_paper" type="box" size="0.3 0.2 0.001" pos="-0.3 0 1.085" material="paper"/>
+    </body>
+
+    <!-- 7. 第3组课桌（远离幕布一侧） -->
+    <body name="desk3" pos="-15 12.0 0">
+      <geom name="desk3_top" type="box" size="0.8 0.5 0.08" pos="0 0 1.0" material="desk_top"/>
+      <geom name="desk3_leg1" type="box" size="0.08 0.08 0.6" pos="0.7 0.4 0.3" material="desk_leg"/>
+      <geom name="desk3_leg2" type="box" size="0.08 0.08 0.6" pos="0.7 -0.4 0.3" material="desk_leg"/>
+      <geom name="desk3_leg3" type="box" size="0.08 0.08 0.6" pos="-0.7 0.4 0.3" material="desk_leg"/>
+      <geom name="desk3_leg4" type="box" size="0.08 0.08 0.6" pos="-0.7 -0.4 0.3" material="desk_leg"/>
+      <geom name="desk3_paper" type="box" size="0.3 0.2 0.001" pos="-0.3 0 1.085" material="paper"/>
+    </body>
+  </worldbody>
+</mujoco>
