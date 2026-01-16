@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mujoco model="modern_window_room_with_adjustable_lamp">
+   <compiler angle="degree" coordinate="local" inertiafromgeom="true" />
+   <option timestep="0.005" gravity="0 0 -9.81" />
+   <visual>
+      <global offwidth="800" offheight="800" />
+      <map force="0.05" zfar="30" />
+      <rgba haze="0.25 0.35 0.45 1" />
+   </visual>
+   <asset>
+      <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1="0.12 0.12 0.12" rgb2="0.2 0.2 0.2" />
+      <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance="0.1" />
+      <material name="brown" rgba="0.55 0.35 0.2 1" />
+      <material name="black" rgba="0.05 0.05 0.05 1" />
+      <material name="book1" rgba="0.2 0.3 0.7 1" />
+      <material name="book2" rgba="0.7 0.2 0.3 1" />
+      <material name="bed_frame" rgba="0.45 0.3 0.15 1" />
+      <material name="mattress" rgba="0.95 0.95 0.98 1" />
+      <material name="white" rgba="0.95 0.95 0.95 1" />
+      <material name="pink" rgba="1.0 0.75 0.8 1" />
+      <material name="beige" rgba="0.85 0.8 0.7 1" />
+      <material name="dark_gray" rgba="0.3 0.3 0.3 1" />
+      <material name="green" rgba="0.2 0.6 0.3 1" />
+      <material name="gold" rgba="0.85 0.75 0.4 1" />
+      <material name="wall" rgba="0.95 0.95 0.92 1" reflectance="0.1" />
+      <material name="ceiling" rgba="0.98 0.98 0.98 1" reflectance="0.1" />
+      <material name="glass" rgba="0.85 0.92 0.98 0.05" reflectance="0.05" />
+      <material name="window_frame" rgba="0.95 0.95 0.95 1" />
+      <material name="curtain" rgba="0.9 0.88 0.85 0.7" />
+      <material name="silver" rgba="0.75 0.75 0.75 1" />
+      <material name="wood_dark" rgba="0.4 0.3 0.2 1" />
+      <material name="wood_light" rgba="0.7 0.6 0.4 1" />
+      <material name="metal" rgba="0.8 0.8 0.85 1" />
+      <material name="window_sill_gray" rgba="0.7 0.7 0.7 1" />
+      <material name="light_gray_wall" rgba="0.9 0.9 0.9 1" />
+      <material name="dark_floor" rgba="0.12 0.12 0.12 1" />
+      <material name="lamp_base" rgba="0.1 0.1 0.1 1" />
+      <material name="lamp_pole" rgba="0.15 0.15 0.15 1" />
+      <material name="lamp_shade" rgba="0.8 0.8 0.8 0.7" />
+      <material name="bright_indicator" rgba="1.0 0.8 0.2 1" />
+   </asset>
+   <worldbody>
+      <!-- 地面 - 使用更暗的材质 -->
+      <geom name="floor" pos="0 0 0" size="0 0 0.05" type="plane" material="dark_floor" />
+      <!-- 后墙 - 改为大窗户墙 -->
+      <geom name="back_wall_left" type="box" size="1.5 0.05 2.0" pos="-2.0 0.5 2.0" material="light_gray_wall" />
+      <geom name="back_wall_right" type="box" size="1.5 0.05 2.0" pos="2.0 0.5 2.0" material="light_gray_wall" />
+      <!-- 前墙 - 修改为带门的结构 -->
+      <geom name="front_wall_left" type="box" size="1.2 0.05 2.0" pos="-2.3 -4.0 2.0" material="light_gray_wall" />
+      <geom name="front_wall_right" type="box" size="1.2 0.05 2.0" pos="2.3 -4.0 2.0" material="light_gray_wall" />
+      <geom name="front_wall_top" type="box" size="0.8 0.05 0.5" pos="0 -4.0 3.25" material="light_gray_wall" />
+      <!-- 左墙 -->
+      <geom name="left_wall" type="box" size="0.05 2.25 2.0" pos="-3.5 -1.75 2.0" material="light_gray_wall" />
+      <!-- 右墙 -->
+      <geom name="right_wall" type="box" size="0.05 2.25 2.0" pos="3.5 -1.75 2.0" material="light_gray_wall" />
+      <!-- 天花板 -->
+      <geom name="ceiling" type="box" size="4.0 2.25 0.05" pos="0 -1.75 4.0" material="ceiling" />
+      <!-- 在书桌前墙位置创建大窗户 -->
+      <body name="main_window" pos="0 0.5 2.0">
+         <geom name="main_window_frame_top" type="box" size="2.0 0.03 0.03" pos="0 0 0.9" material="window_frame" />
+         <geom name="main_window_frame_bottom" type="box" size="2.0 0.03 0.03" pos="0 0 -0.9" material="window_frame" />
+         <geom name="main_window_frame_left" type="box" size="0.03 0.03 0.85" pos="-1.97 0 0" material="window_frame" />
+         <geom name="main_window_frame_right" type="box" size="0.03 0.03 0.85" pos="1.97 0 0" material="window_frame" />
+         <geom name="main_window_frame_middle_h" type="box" size="2.0 0.03 0.03" pos="0 0 0" material="window_frame" />
+         <geom name="main_window_frame_middle_v" type="box" size="0.03 0.03 0.85" pos="0 0 0" material="window_frame" />
+         <geom name="main_window_glass_tl" type="box" size="0.97 0.005 0.42" pos="-0.985 0.01 0.47" material="glass" />
+         <geom name="main_window_glass_tr" type="box" size="0.97 0.005 0.42" pos="0.985 0.01 0.47" material="glass" />
+         <geom name="main_window_glass_bl" type="box" size="0.97 0.005 0.42" pos="-0.985 0.01 -0.47" material="glass" />
+         <geom name="main_window_glass_br" type="box" size="0.97 0.005 0.42" pos="0.985 0.01 -0.47" material="glass" />
+         <geom name="main_window_sill" type="box" size="2.0 0.1 0.03" pos="0 -0.07 -0.9" material="window_sill_gray" />
+         <geom name="sill_plant_left" type="sphere" size="0.08" pos="-0.6 -0.07 -0.87" material="green" />
+         <geom name="sill_plant_right" type="sphere" size="0.08" pos="0.6 -0.07 -0.87" material="green" />
+      </body>
+      <!-- 前墙门 -->
+      <body name="front_door" pos="0 -4.0 1.0">
+         <!-- 门框 -->
+         <geom name="door_frame_top" type="box" size="0.9 0.05 0.05" pos="0 0 1.9" material="wood_dark" />
+         <geom name="door_frame_left" type="box" size="0.05 0.05 1.8" pos="-0.85 0 0.9" material="wood_dark" />
+         <geom name="door_frame_right" type="box" size="0.05 0.05 1.8" pos="0.85 0 0.9" material="wood_dark" />
+         <!-- 门板 -->
+         <geom name="door" type="box" size="0.8 0.03 1.8" pos="0 0.02 0.9" material="wood_light" />
+         <!-- 门把手 -->
+         <geom name="door_handle" type="cylinder" size="0.02 0.04" pos="0.75 0.04 0.9" euler="0 90 0" material="metal" />
+      </body>
+      <!-- 书桌靠窗墙放置 -->
+      <body name="desk" pos="0 -0.8 0.5">
+         <geom name="desk_top" type="box" size="1.0 0.6 0.03" pos="0 0 0" material="brown" />
+         <geom name="leg1" type="cylinder" size="0.025 0.25" pos="0.9 0.5 -0.28" material="brown" />
+         <geom name="leg2" type="cylinder" size="0.025 0.25" pos="0.9 -0.5 -0.28" material="brown" />
+         <geom name="leg3" type="cylinder" size="0.025 0.25" pos="-0.9 0.5 -0.28" material="brown" />
+         <geom name="leg4" type="cylinder" size="0.025 0.25" pos="-0.9 -0.5 -0.28" material="brown" />
+         <geom name="desk_drawer" type="box" size="0.8 0.5 0.08" pos="0 0 -0.15" material="wood_dark" />
+      </body>
+      <!-- 衣柜移到书桌左边并靠墙摆放 -->
+      <body name="wardrobe" pos="-2.8 -0.8 1.2" euler="0 0 0">
+         <geom name="wardrobe_body" type="box" size="0.3 1.2 1.2" pos="0 0 0" material="white" />
+         <geom name="wardrobe_door_left" type="box" size="0.32 0.55 1.15" pos="0.02 -0.6 0" material="white" />
+         <geom name="wardrobe_door_right" type="box" size="0.32 0.55 1.15" pos="0.02 0.6 0" material="white" />
+         <geom name="handle_left" type="cylinder" size="0.018 0.06" pos="0.35 -0.3 0" euler="0 90 0" material="black" />
+         <geom name="handle_right" type="cylinder" size="0.018 0.06" pos="0.35 0.3 0" euler="0 90 0" material="black" />
+      </body>
+      <!-- 可调节亮度台灯 -->
+      <body name="adjustable_lamp" pos="0.3 -0.5 0.3">
+         <!-- 灯座 -->
+         <geom name="lamp_base" type="cylinder" size="0.08 0.02" pos="0 0 0" material="lamp_base" />
+         <!-- 可调节灯柱 -->
+         <body name="lamp_pole" pos="0 0 0.05">
+            <joint name="height_joint" type="slide" axis="0 0 1" range="0 0.3" />
+            <geom name="pole_geom" type="cylinder" size="0.01 0.2" pos="0 0 0.2" material="lamp_pole" />
+            <!-- 灯头 -->
+            <body name="lamp_head" pos="0 0 0.4">
+               <geom name="shade" type="capsule" size="0.06 0.1" pos="0 0 0" euler="90 0 0" material="lamp_shade" />
+               <!-- 可调节光源 -->
+               <light name="adjustable_light" mode="fixed" pos="0 0 0" dir="0 0 -1" diffuse="0.5 0.45 0.3" specular="0.4 0.35 0.2" attenuation="0.5 0 0" cutoff="45" exponent="2" />
+            </body>
+         </body>
+      </body>
+      <!-- 书本和文具 --> 
+      <body name="book1" pos="0 -0.6 0.545">
+         <geom name="book1_geom" type="box" size="0.09 0.15 0.018" material="book1" />
+      </body> 
+      <!-- 
+      <body name="book2" pos="0.3 -0.6 0.545">
+         <geom name="book2_geom" type="box" size="0.1 0.16 0.022" euler="0 0 10" material="book2" />
+      </body> !-->
+      <body name="pen" pos="-0.2 -1.0 0.528">
+         <geom name="pen_body" type="capsule" size="0.005 0.08" euler="0 90 25" material="black" />
+      </body>
+      <body name="pen_holder" pos="0.6 -0.5 0.52">
+         <geom name="pen_holder_body" type="cylinder" size="0.05 0.1" material="white" />
+      </body>
+      <body name="desk_photo_frame" pos="0.6 -1.1 0.52">
+         <geom name="photo_frame_stand" type="box" size="0.1 0.012 0.12" material="white" />
+         <geom name="photo_frame_border" type="box" size="0.095 0.006 0.115" pos="0 0.006 0" material="silver" />
+      </body>
+      <!-- 椅子调整位置 -->
+      <body name="chair" pos="0 -1.6 0.25">
+         <geom name="chair_seat" type="box" size="0.25 0.25 0.025" pos="0 0 0" material="brown" />
+         <geom name="chair_back" type="box" size="0.25 0.025 0.25" pos="0 -0.22 0.25" material="brown" />
+         <geom name="chair_leg1" type="cylinder" size="0.018 0.15" pos="0.2 0.2 -0.15" material="brown" />
+         <geom name="chair_leg2" type="cylinder" size="0.018 0.15" pos="0.2 -0.2 -0.15" material="brown" />
+         <geom name="chair_leg3" type="cylinder" size="0.018 0.15" pos="-0.2 0.2 -0.15" material="brown" />
+         <geom name="chair_leg4" type="cylinder" size="0.018 0.15" pos="-0.2 -0.2 -0.15" material="brown" />
+      </body>
+      <!-- 调整原窗户位置和大小 -->
+      <body name="side_window" pos="-1.8 0.5 1.8">
+         <geom name="side_window_frame_top" type="box" size="0.8 0.03 0.03" pos="0 0 0.6" material="window_frame" />
+         <geom name="side_window_frame_bottom" type="box" size="0.8 0.03 0.03" pos="0 0 -0.6" material="window_frame" />
+         <geom name="side_window_frame_left" type="box" size="0.03 0.03 0.57" pos="-0.77 0 0" material="window_frame" />
+         <geom name="side_window_frame_right" type="box" size="0.03 0.03 0.57" pos="0.77 0 0" material="window_frame" />
+         <geom name="side_window_glass" type="box" size="0.74 0.005 0.54" pos="0 0.01 0" material="glass" />
+         <geom name="side_window_sill" type="box" size="0.8 0.08 0.02" pos="0 -0.05 -0.6" material="window_sill_gray" />
+      </body>
+      <!-- 天花板灯 - 降低亮度 -->
+      <body name="ceiling_light" pos="0 -1.75 2.8">
+         <geom name="light_base" type="cylinder" size="0.18 0.05" material="white" />
+         <!-- 降低天花板灯的强度和衰减 -->
+         <light name="ceiling_lamp" mode="fixed" pos="0 0 -0.1" dir="0 0 -1" directional="false" diffuse="0.7 0.7 0.6" specular="0.3 0.3 0.3" attenuation="0.5 0 0" cutoff="120" />
+      </body>
+      <!-- 床位置调整 -->
+      <body name="bed" pos="2.5 -1.0 0.3">
+         <geom name="bed_base" type="box" size="0.6 1.2 0.03" pos="0 0 0" material="bed_frame" />
+         <geom name="bed_frame_left" type="box" size="0.06 1.2 0.12" pos="-0.54 0 0.09" material="bed_frame" />
+         <geom name="bed_frame_right" type="box" size="0.06 1.2 0.12" pos="0.54 0 0.09" material="bed_frame" />
+         <geom name="bed_frame_head" type="box" size="0.6 0.06 0.12" pos="0 1.14 0.09" material="bed_frame" />
+         <geom name="bed_frame_foot" type="box" size="0.6 0.06 0.12" pos="0 -1.14 0.09" material="bed_frame" />
+         <geom name="mattress" type="box" size="0.52 1.1 0.12" pos="0 0 0.2" material="mattress" />
+         <geom name="headboard" type="box" size="0.6 0.04 0.4" pos="0 1.18 0.55" material="bed_frame" />
+         <geom name="quilt" type="box" size="0.5 0.9 0.06" pos="0 -0.1 0.35" material="pink" />
+         <geom name="pillow" type="box" size="0.35 0.2 0.1" pos="0 0.8 0.36" material="white" />
+         <geom name="bed_leg1" type="cylinder" size="0.035 0.15" pos="0.45 1.1 -0.17" material="bed_frame" />
+         <geom name="bed_leg2" type="cylinder" size="0.035 0.15" pos="0.45 -1.1 -0.17" material="bed_frame" />
+         <geom name="bed_leg3" type="cylinder" size="0.035 0.15" pos="-0.45 1.1 -0.17" material="bed_frame" />
+         <geom name="bed_leg4" type="cylinder" size="0.035 0.15" pos="-0.45 -1.1 -0.17" material="bed_frame" />
+      </body>
+      <!-- 地毯 -->
+      <body name="rug" pos="0 -1.75 0.01">
+         <geom name="rug_geom" type="box" size="3.2 1.8 0.008" material="beige" />
+      </body>
+      <!-- 墙上装饰画框 -->
+      <body name="wall_frame_left" pos="1.5 0.45 1.5">
+         <geom name="frame_border_left" type="box" size="0.4 0.012 0.35" material="gold" />
+         <geom name="frame_picture_left" type="box" size="0.37 0.008 0.32" pos="0 -0.008 0" material="beige" />
+      </body>
+      <!-- 休闲椅位置调整 -->
+      <body name="armchair" pos="2.0 -3.2 0.4">
+         <geom name="armchair_seat" type="box" size="0.4 0.4 0.1" pos="0 0 0" material="pink" />
+         <geom name="armchair_back" type="box" size="0.4 0.1 0.5" pos="0 -0.35 0.3" material="pink" />
+         <geom name="armchair_arm_left" type="box" size="0.05 0.4 0.3" pos="-0.35 0 0.2" material="pink" />
+         <geom name="armchair_arm_right" type="box" size="0.05 0.4 0.3" pos="0.35 0 0.2" material="pink" />
+         <geom name="armchair_leg1" type="cylinder" size="0.02 0.15" pos="0.3 0.3 -0.25" material="silver" />
+         <geom name="armchair_leg2" type="cylinder" size="0.02 0.15" pos="0.3 -0.3 -0.25" material="silver" />
+         <geom name="armchair_leg3" type="cylinder" size="0.02 0.15" pos="-0.3 0.3 -0.25" material="silver" />
+         <geom name="armchair_leg4" type="cylinder" size="0.02 0.15" pos="-0.3 -0.3 -0.25" material="silver" />
+      </body>
+      <!-- 亮度指示器 -->
+      <body name="brightness_indicator" pos="0.8 -0.5 0.1">
+         <geom name="indicator_base" type="box" size="0.15 0.02 0.02" pos="0 0 0" material="dark_gray" />
+         <geom name="indicator_level" type="box" size="0.01 0.015 0.015" pos="-0.12 0 0" material="bright_indicator" />
+      </body>
+      <!-- 环境光照 - 降低亮度 -->
+      <light directional="true" pos="0 3 6" dir="0 -0.5 -1" diffuse="0.3 0.3 0.3" specular="0.1 0.1 0.1" />
+      <light directional="true" pos="-3 3 6" dir="0.5 -0.5 -1" diffuse="0.2 0.25 0.3" specular="0.05 0.05 0.05" />
+      <light directional="true" pos="0 0.8 3" dir="0 -0.3 -1" diffuse="0.2 0.25 0.3" />
+   </worldbody>
+   <actuator>
+      <!-- 亮度控制执行器（通过灯柱高度控制亮度） -->
+      <general name="brightness_control" joint="height_joint" ctrllimited="true" ctrlrange="0 0.3" gainprm="100" biasprm="0 -100 0" />
+   </actuator>
+   <sensor>
+      <!-- 亮度传感器 -->
+      <actuatorpos name="brightness_sensor" actuator="brightness_control" />
+   </sensor>
+</mujoco>
