@@ -11,8 +11,63 @@
     <material name="mat_door" rgba="0.4 0.2 0.1 1"/>
     <material name="mat_blackboard" rgba="0.1 0.2 0.1 1"/>
     <material name="mat_tech" rgba="0.05 0.05 0.05 1"/>
+    <material name="mat_led" rgba="1 1 1 1" emission="1"/>
   </asset>
   <worldbody>
+    <body name="ceiling_fan" pos="0 0 2.8">
+        <geom name="fan_rod" type="cylinder" size="0.015 0.1" pos="0 0 0.15" material="mat_metal"/>
+        
+        <geom name="fan_motor_housing" type="cylinder" size="0.12 0.05" pos="0 0 0.05" rgba="0.2 0.2 0.2 1"/>
+        
+        <body name="fan_rotating_part" pos="0 0 0.02">
+            <joint name="fan_joint" type="hinge" axis="0 0 1" frictionloss="0.05" damping="0.1"/>
+            
+            <geom name="fan_hub" type="cylinder" size="0.06 0.02" material="mat_metal"/>
+
+            <body name="blade_1" pos="0.08 0 0" euler="15 0 0">
+                <geom name="blade_1_geom" type="box" size="0.5 0.07 0.005" pos="0.25 0 0" material="mat_metal" rgba="0.4 0.4 0.4 1"/>
+            </body>
+            
+            <body name="blade_2" pos="-0.08 0 0" euler="-15 0 0">
+                <geom name="blade_2_geom" type="box" size="0.5 0.07 0.005" pos="-0.25 0 0" material="mat_metal" rgba="0.4 0.4 0.4 1"/>
+            </body>
+            
+            <body name="blade_3" pos="0 0.08 0" euler="0 15 0">
+                <geom name="blade_3_geom" type="box" size="0.07 0.5 0.005" pos="0 0.25 0" material="mat_metal" rgba="0.4 0.4 0.4 1"/>
+            </body>
+            
+            <body name="blade_4" pos="0 -0.08 0" euler="0 -15 0">
+                <geom name="blade_4_geom" type="box" size="0.07 0.5 0.005" pos="0 -0.25 0" material="mat_metal" rgba="0.4 0.4 0.4 1"/>
+            </body>
+        </body>
+    </body>
+    <body name="light_1" pos="-3 3 3">
+            <geom type="box" size="2 0.3 0.05" material="mat_metal" />
+            <geom type="box" size="1.8 0.2 0.02" pos="0 0 -0.1" material="mat_led" />
+            <light name="light_L1" pos="0 0 -0.5" dir="0 0 -1" diffuse="1.2 1.2 1.2" 
+                   cutoff="90" exponent="2" castshadow="true"/>
+        </body>
+
+        <body name="light_2" pos="3 3 3">
+            <geom type="box" size="2 0.3 0.05" material="mat_metal" />
+            <geom type="box" size="1.8 0.2 0.02" pos="0 0 -0.1" material="mat_led" />
+            <light name="light_L2" pos="0 0 -0.5" dir="0 0 -1" diffuse="1.2 1.2 1.2" 
+                   cutoff="90" exponent="2" castshadow="true"/>
+        </body>
+
+        <body name="light_3" pos="3 -4.5 3">
+            <geom type="box" size="2 0.3 0.05" material="mat_metal" />
+            <geom type="box" size="1.8 0.2 0.02" pos="0 0 -0.1" material="mat_led" />
+            <light name="light_L3" pos="0 0 -0.5" dir="0 0 -1" diffuse="1.2 1.2 1.2" 
+                   cutoff="90" exponent="2" castshadow="true"/>
+        </body>
+
+        <body name="light_4" pos="-3 -4.5 3">
+            <geom type="box" size="2 0.3 0.05" material="mat_metal" />
+            <geom type="box" size="1.8 0.2 0.02" pos="0 0 -0.1" material="mat_led" />
+            <light name="light_L4" pos="0 0 -0.5" dir="0 0 -1" diffuse="1.2 1.2 1.2" 
+                   cutoff="90" exponent="2" castshadow="true"/>
+        </body>
     <light pos="0 3 7" dir="0 0 -1" diffuse="1.2 1.2 1.2" specular="0.3 0.3 0.3"/>
     <light pos="0 -3 7" dir="0 0 -1" diffuse="1.2 1.2 1.2" specular="0.3 0.3 0.3"/>
     <geom name="floor" type="plane" size="6 8 0.1" material="mat_floor"/>
